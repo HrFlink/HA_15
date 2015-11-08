@@ -161,7 +161,14 @@ class IRsend
     void sendSharp(unsigned int address, unsigned int command);
     void sendSharpRaw(unsigned long data, int nbits);
     void sendPanasonic(unsigned int address, unsigned long data);
-    void sendHAPanasonic(unsigned long data1, unsigned long data2, int nbits);          //Henrik Vestergaard added
+    void sendHAPanasonic(                            // H.Vestergaard changed protocol
+      HvacMode                  HVAC_Mode,           // Example HVAC_HOT  HvacPanasonicMode
+      int                       HVAC_Temp,           // Example 21  (°c)
+      HvacFanMode               HVAC_FanMode,        // Example FAN_SPEED_AUTO  HvacPanasonicFanMode
+      HvacVanneMode             HVAC_VanneMode,      // Example VANNE_AUTO_MOVE  HvacPanasonicVanneMode
+      HvacProfileMode           HVAC_ProfileMode,    // Example QUIET HvacProfileMode
+      int                       HVAC_SWITCH          // Example false
+    );
     void sendHvacMitsubishi(
       HvacMode                  HVAC_Mode,           // Example HVAC_HOT  HvacMitsubishiMode
       int                       HVAC_Temp,           // Example 21  (°c)

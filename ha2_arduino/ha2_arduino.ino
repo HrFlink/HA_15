@@ -224,8 +224,7 @@ void emitIRCommand(byte* payload, int payloadSize){
   }  
   switch (payload[6]) {
     case 0: irsend.sendHvacMitsubishi(mode, payload[1], fan_mode, vanne_mode, payload[5]); break;
-    case 1: irsend.sendHvacPanasonic(mode, payload[1], fan_mode, vanne_mode, profile_mode, payload[5]); break;
-    case 2: irsend.sendHAPanasonic(0x40040720, 0x00000060, 64); break;
+    case 1: irsend.sendHAPanasonic(mode, payload[1], fan_mode, vanne_mode, profile_mode, payload[5]); break;
   }  
   
   
