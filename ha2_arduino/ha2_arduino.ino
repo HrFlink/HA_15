@@ -8,13 +8,13 @@
 /* Protocol elements:
  * I Send IR
  *    AC_Mode
- *    Temp
+ *    Temp (HEX)
  *    Fan Mode
  *    Vanne Mode
  *    Profile Mode //Panasonic only - otherwise not used
- *    ON/OFF (0/1)
+ *    ON/OFF (1/0)
  *    Model (MITSUBISHI = 0, PANASONIC = 1)
- * To test: I00220500000101 (HOT, 22, auto, anto, normal, on, Panasonic)
+ * To test: I00160500000101 (HOT, 22, auto, anto, normal, on, Panasonic)
  *
  * i send ir code 8 bytes+19 bytes
  * 

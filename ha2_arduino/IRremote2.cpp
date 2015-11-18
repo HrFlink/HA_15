@@ -214,7 +214,7 @@ void IRsend::sendHAPanasonic(
   byte mask = 1; //our bitmask
 
   byte dataconst[8] = { 0x02, 0x20, 0xE0, 0x04, 0x00, 0x00, 0x00, 0x06 };
-  byte data[19] = { 0x02, 0x20, 0xE0, 0x04, 0x00, 0x48, 0x3C, 0x80, 0xAF, 0x00, 0x00, 0x0E, 0xE0, 0x10, 0x00, 0x01, 0x00, 0x06, 0xBE };
+  byte data[19] = { 0x02, 0x20, 0xe0, 0x04, 0x00, 0x48, 0x00, 0x80, 0xaf, 0x06, 0x00, 0x0e, 0xe0, 0x00, 0x00, 0x81, 0x00, 0x00, 0x1f };
 
 
   // data array is a valid trame, only byte to be chnaged will be updated.
@@ -232,11 +232,9 @@ void IRsend::sendHAPanasonic(
 
 //  Byte 6 - On / Off
   if (HVAC_SWITCH) {
-    data[5] = (byte) 0x08; // Switch HVAC Power
-  } else {
-    data[5] = (byte) 0x09; // Do not switch HVAC Power
+    data[5] = (byte) data[5] | B00000001; // Switch HVAC Power
   }
-
+  
 //  Byte 6 - Mode
   switch (HVAC_Mode)
   {
@@ -254,6 +252,9 @@ void IRsend::sendHAPanasonic(
   if (HVAC_Temp > 30) { Temp = 30;}
   else if (HVAC_Temp < 16) { Temp = 16; } 
   else { Temp = HVAC_Temp; };
+
+//  data[6] = data[6] | (2 * (Temp - 16));
+
   data[6] = (byte) (Temp - 16) <<1;
   data[6] = (byte) data[6] | B00100000;
   //bits used form the temp are [4:1]
@@ -285,13 +286,13 @@ void IRsend::sendHAPanasonic(
   }
 
    // Byte 14 - Profile
-  switch (HVAC_ProfileMode)
-  {
-    case NORMAL:        data[13] = (byte) B00010000; break;
-    case QUIET:         data[13] = (byte) B01100000; break;
-    case BOOST:         data[13] = (byte) B00010001; break;
-    default: break;
-  }  
+  //switch (HVAC_ProfileMode)
+  //{
+  //  case NORMAL:        data[13] = (byte) B00010000; break;
+  //  case QUIET:         data[13] = (byte) B01100000; break;
+  //  case BOOST:         data[13] = (byte) B00010001; break;
+  //  default: break;
+  //}  
   
   
   // Byte 18 - CRC
@@ -359,9 +360,6 @@ void IRsend::sendHAPanasonic(
 
 }
 
-
-
- 
 
 void IRsend::sendPanasonic(unsigned int address, unsigned long data) {
   enableIROut(35);
